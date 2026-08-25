@@ -7,10 +7,15 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/health")
+@RequestMapping("/api/v1")
 public class HealthController {
 
-    @GetMapping
+    @GetMapping("/")
+    public String home() {
+        return "Tourism Service is running.";
+    }
+
+    @GetMapping("/health")
     public Map<String, String> health() {
         return Map.of("status", "UP");
     }
