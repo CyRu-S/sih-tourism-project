@@ -1,0 +1,14 @@
+com\sih\tourism\recommendation\domain\AccessibilityNeed.class
+com\sih\tourism\recommendation\domain\CrowdLevel.class
+com\sih\tourism\recommendation\domain\CrowdPreference.class
+com\sih\tourism\recommendation\domain\ScoreBreakdown.class
+com\sih\tourism\recommendation\domain\RecommendationWeights.class
+com\sih\tourism\recommendation\domain\RecommendationEngine.class
+com\sih\tourism\recommendation\domain\WalkingDifficulty.class
+com\sih\tourism\recommendation\domain\CrowdConfidence.class
+com\sih\tourism\recommendation\domain\RecommendationQuery.class
+com\sih\tourism\recommendation\domain\CrowdEstimate.class
+com\sih\tourism\recommendation\domain\RecommendationCandidate.class
+com\sih\tourism\recommendation\domain\DefaultRecommendationEngine.class
+com\sih\tourism\recommendation\domain\DefaultRecommendationEngine$1.class
+com\sih\tourism\recommendation\domain\RecommendationResult.class
