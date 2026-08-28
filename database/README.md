@@ -70,6 +70,7 @@ When executing these scripts on a fresh database, run them in the following orde
 4.  **`sql/004_seed_tags.sql`**: Applies temporary tags.
 5.  **`sql/005_seed_crowd_profiles.sql`**: Populates the time-based crowd indices.
 6.  **`sql/006_seed_kolkata_demo.sql`**: Adds the frontend's Kolkata demo records so the live app has nearby results. This is not the Member 5 production dataset.
+7.  **`sql/007_seed_vijayawada_demo.sql`**: Adds Vijayawada-area records for the physical Android device flow. This is not the Member 5 production dataset.
 
 ---
 

@@ -29,7 +29,7 @@ export default function HomeScreen({ navigation }) {
   return <SafeAreaView style={styles.safe}>
     <StatusBar style="dark" />
     <View style={styles.lightOne} /><View style={styles.lightTwo} /><View style={styles.lightThree} />
-    <View style={styles.nav}><View style={styles.navLogo}><VoyageLogo size={33} /></View><View style={styles.status}><View style={styles.statusDot} /><Text style={styles.statusText}>KOLKATA</Text></View></View>
+    <View style={styles.nav}><View style={styles.navLogo}><VoyageLogo size={33} /></View><View style={styles.status}><View style={styles.statusDot} /><Text style={styles.statusText}>VIJAYAWADA</Text></View></View>
     <View style={styles.hero}><View style={styles.logoHalo} /><Animated.View style={logoStyle}><VoyageLogo size={206} /></Animated.View><Text style={styles.heroCaption}>LOCAL STORIES, LIGHTLY CURATED</Text></View>
     <Animated.View style={[styles.content, contentStyle]}>
       <Text style={styles.title}>Go gently.{`\n`}See more.</Text>

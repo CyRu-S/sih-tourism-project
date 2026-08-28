@@ -19,6 +19,8 @@ npm ci
 
 Optionally copy `frontend/.env.example` to `frontend/.env`. By default, the browser uses `http://localhost:8010` and the Android emulator uses `http://10.0.2.2:8010`; a physical phone must use the computer's LAN address.
 
+For the current local setup, `frontend/.env` is already configured with the computer's Wi-Fi address. Keep the phone on the same Wi-Fi network and restart Expo after the address changes. If Windows Firewall asks, allow Java on private networks; otherwise add an inbound TCP rule for port `8010` from an Administrator PowerShell window.
+
 Copy `backend/.env.example` to `backend/.env`, add the Supabase JDBC details, then start the API:
 
 ```sh
@@ -46,6 +48,6 @@ Execute the scripts in `database/sql/` in numeric order. They are safe to rerun 
 - `GET /api/v1/places/{id}?originLat=...&originLng=...`
 - `GET /api/v1/places/{id}/route?originLat=...&originLng=...&mode=foot-walking`
 
-Recommendations are scored by the merged AI engine using distance, interests, hiddenness, crowd, accessibility, and curation. Distance affects rank but is deliberately not a hard filter, so the complete active dataset remains available. Crowd estimates come from the `crowd_profiles` table for the current India time bucket. If `ORS_API_KEY` is absent, route requests return a usable straight-line estimate instead of failing.
+Recommendations are scored by the merged AI engine using distance, interests, hiddenness, crowd, accessibility, and curation. Distance is applied as a filter and a ranking signal. Crowd estimates come from the `crowd_profiles` table for the current India time bucket. If `ORS_API_KEY` is absent, route requests return a usable straight-line estimate instead of failing.
 
 Never commit `.env` files, database passwords, Supabase URLs, or API keys.

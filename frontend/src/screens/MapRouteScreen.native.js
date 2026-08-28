@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Animated, Pressable, StyleSheet, Text as NativeText, View } from 'react-native';
+import { Animated, Linking, Pressable, StyleSheet, Text as NativeText, View } from 'react-native';
 import MapView, { Circle, Marker, Polyline } from 'react-native-maps';
 import { getRoute } from '../api/routeApi';
 import { colors, fonts } from '../config/theme';
@@ -45,10 +45,14 @@ export default function MapRouteScreen({ route, navigation }) {
   const sheetStyle = useMemo(() => ({ opacity: sheetProgress, transform: [{ translateY: sheetProgress.interpolate({ inputRange: [0, 1], outputRange: [190, 0] }) }] }), [sheetProgress]);
 
   const frameRoute = useCallback(() => mapRef.current?.fitToCoordinates([source, destination], { edgePadding: { top: 80, right: 24, bottom: 285, left: 24 }, animated: true }), [source.latitude, source.longitude, destination.latitude, destination.longitude]);
-  const focusDestination = useCallback(() => mapRef.current?.animateCamera({ center: destination, zoom: 14 }, { duration: 700 }), [destination.latitude, destination.longitude]);
-
+  const openGoogleNavigation = useCallback(async () => {
+    const travelMode = mode === 'drive' ? 'driving' : mode === 'cycle' ? 'bicycling' : 'walking';
+    const url = `https://www.google.com/maps/dir/?api=1&origin=${origin.lat},${origin.lng}&destination=${destination.latitude},${destination.longitude}&travelmode=${travelMode}`;
+    try { await Linking.openURL(url); }
+    catch { setError('Google Maps could not be opened on this device.'); }
+  }, [destination.latitude, destination.longitude, mode, origin.lat, origin.lng]);
   return <View style={styles.screen}>
-    <MapView ref={mapRef} style={styles.map} onMapReady={focusDestination} onPress={frameRoute} customMapStyle={mapStyle}>
+    <MapView ref={mapRef} style={styles.map} onMapReady={frameRoute} onPress={frameRoute} customMapStyle={mapStyle}>
       <Circle center={destination} radius={880} fillColor={heat.soft} strokeColor="transparent" />
       <Circle center={destination} radius={480} fillColor={heat.soft} strokeColor="transparent" />
       <Circle center={destination} radius={220} fillColor={heat.strong} strokeColor="rgba(255,255,255,.8)" strokeWidth={1} />
@@ -67,6 +71,7 @@ export default function MapRouteScreen({ route, navigation }) {
       <View style={styles.sheetTopline}><View><Text style={styles.kicker}>YOUR ROUTE</Text><Text style={styles.routeTitle}>{distance} km to go</Text></View><Pressable onPress={frameRoute} hitSlop={10}><Text style={styles.recenter}>Recenter</Text></Pressable></View>
       <View style={styles.modeRow}>{modes.map((item) => <Pressable key={item.id} onPress={() => setMode(item.id)} style={[styles.mode, mode === item.id && styles.modeActive]}><Text style={[styles.modeLabel, mode === item.id && styles.modeLabelActive]}>{item.label}</Text><Text style={[styles.modeTime, mode === item.id && styles.modeTimeActive]}>{Math.round(baseDuration * item.multiplier)} min</Text></Pressable>)}</View>
       <View style={styles.routeDetail}><View style={styles.routeIcon}><Text style={styles.routeIconText}>{mode === 'walk' ? 'W' : mode === 'cycle' ? 'C' : 'D'}</Text></View><View style={styles.routeDetailCopy}><Text style={styles.arrival}>ARRIVE IN ABOUT {duration} MIN</Text><Text style={styles.routeHint}>{mode === 'walk' ? 'A relaxed, street-level way to arrive.' : mode === 'cycle' ? 'An easy-paced ride through the city.' : 'The smoothest route based on the live map.'}</Text></View><Text style={styles.arrow}>›</Text></View>
+      <Pressable onPress={openGoogleNavigation} style={styles.navigateButton}><Text style={styles.navigateButtonText}>Navigate with Google Maps</Text><Text style={styles.navigateArrow}>↗</Text></Pressable>
       <View style={styles.footerRow}><View style={styles.crowdStatus}><View style={[styles.crowdDot, { backgroundColor: heat.strong }]} /><Text style={styles.crowdText}>{crowd.level} CROWD</Text></View><Pressable onPress={() => navigation.navigate('PlaceDetails', { placeId: place.placeId, origin, preview: place })}><Text style={styles.storyLink}>Place story</Text></Pressable></View>
       {error && <Pressable onPress={loadRoute}><Text style={styles.error}>{error} Tap to retry.</Text></Pressable>}
     </Animated.View>
@@ -84,5 +89,6 @@ const styles = StyleSheet.create({
   sheet: { backgroundColor: 'rgba(255,255,255,.97)', paddingHorizontal: 20, paddingTop: 10, paddingBottom: 25, borderTopLeftRadius: 28, borderTopRightRadius: 28, shadowColor: colors.ink, shadowOpacity: .18, shadowRadius: 22, shadowOffset: { width: 0, height: -5 }, elevation: 12 }, grip: { width: 38, height: 4, borderRadius: 99, backgroundColor: '#A6D9EE', alignSelf: 'center', marginBottom: 15 }, sheetTopline: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }, kicker: { color: colors.forest, letterSpacing: 1.25, fontSize: 9 }, routeTitle: { color: colors.ink, fontSize: 22, letterSpacing: -.6, marginTop: 3 }, recenter: { color: colors.forest, fontSize: 12 },
   modeRow: { flexDirection: 'row', gap: 8, marginTop: 17 }, mode: { flex: 1, borderWidth: 1, borderColor: colors.line, borderRadius: 12, paddingVertical: 10, paddingHorizontal: 9 }, modeActive: { backgroundColor: colors.forest, borderColor: colors.forest }, modeLabel: { color: colors.muted, fontSize: 11 }, modeLabelActive: { color: colors.white }, modeTime: { color: colors.ink, fontSize: 14, marginTop: 3 }, modeTimeActive: { color: colors.white },
   routeDetail: { flexDirection: 'row', alignItems: 'center', marginTop: 17, paddingVertical: 13, borderTopWidth: StyleSheet.hairlineWidth, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: colors.line }, routeIcon: { width: 34, height: 34, backgroundColor: colors.moss, borderRadius: 10, alignItems: 'center', justifyContent: 'center', marginRight: 10 }, routeIconText: { color: colors.forestDark, fontSize: 13, fontWeight: '900' }, routeDetailCopy: { flex: 1 }, arrival: { color: colors.ink, fontSize: 10, fontWeight: '900', letterSpacing: .75 }, routeHint: { color: colors.muted, fontSize: 12, lineHeight: 16, marginTop: 3 }, arrow: { color: colors.forest, fontSize: 27, fontWeight: '300' },
+  navigateButton: { marginTop: 13, minHeight: 44, paddingHorizontal: 14, borderRadius: 12, backgroundColor: colors.navy, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }, navigateButtonText: { color: colors.white, fontSize: 12, fontWeight: '900' }, navigateArrow: { color: colors.white, fontSize: 18 },
   footerRow: { marginTop: 14, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }, crowdStatus: { flexDirection: 'row', gap: 6, alignItems: 'center' }, crowdDot: { height: 7, width: 7, borderRadius: 4 }, crowdText: { color: colors.muted, fontSize: 9, fontWeight: '900', letterSpacing: .8 }, storyLink: { color: colors.forest, fontSize: 12, fontWeight: '900' }, error: { color: colors.coral, fontSize: 11, lineHeight: 16, marginTop: 11 }
 });

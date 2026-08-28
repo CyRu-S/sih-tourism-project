@@ -1,4 +1,5 @@
-export const demoLocation = { lat: 22.5726, lng: 88.3639 };
+// Vijayawada is the fallback when device location is unavailable during demos.
+export const demoLocation = { lat: 16.5062, lng: 80.6480 };
 
 export const places = [
   {
