@@ -69,6 +69,7 @@ When executing these scripts on a fresh database, run them in the following orde
 3.  **`sql/003_seed_places.sql`**: Loads the core places (restarts the ID sequence correctly).
 4.  **`sql/004_seed_tags.sql`**: Applies temporary tags.
 5.  **`sql/005_seed_crowd_profiles.sql`**: Populates the time-based crowd indices.
+6.  **`sql/006_seed_kolkata_demo.sql`**: Adds the frontend's Kolkata demo records so the live app has nearby results. This is not the Member 5 production dataset.
 
 ---
 

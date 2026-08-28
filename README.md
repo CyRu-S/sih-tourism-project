@@ -1,37 +1,49 @@
 # Voyage
 
-An Android-first, plain JavaScript Expo SDK 54 app for the SIH hyper-local tourism flow.
+An Expo SDK 54 tourism app with a Spring Boot backend, Supabase PostgreSQL database, live crowd-aware recommendations, and route support.
 
-## Run it
+## Project layout
 
-Install dependencies once:
+- `App.js`, `src/` — Expo mobile/web application.
+- `backend/` — Spring Boot API and merged recommendation engine.
+- `database/` — Supabase schema, indexes, and safe demo seed scripts.
 
-```sh
-npm install
-```
+## Run locally
 
-MapLibre is a native module, so it cannot run inside Expo Go. Build a development client on an Android device/emulator:
-
-```sh
-npm run android
-npm start
-```
-
-## Connect the backend
-
-The app starts with local sample responses so all five screens can be demonstrated. Once Spring Boot is available, set these before starting Expo:
+Install the Expo SDK 54 dependencies:
 
 ```sh
-EXPO_PUBLIC_API_URL=http://YOUR_LAN_IP:8080
-EXPO_PUBLIC_USE_MOCK_DATA=false
+npm ci
 ```
 
-All network calls live in `src/api/`; no endpoint URLs, API keys, or credentials are placed in screen components.
+Copy `.env.example` to `.env` and set `EXPO_PUBLIC_API_URL`. The Android emulator uses `http://10.0.2.2:8010`; a physical phone must use the computer's LAN address.
 
-## Included flow
+Copy `backend/.env.example` to `backend/.env`, add the Supabase JDBC details, then start the API:
 
-1. Open an animated Voyage landing screen and begin a personalised discovery flow.
-2. Request foreground location only after the discovery CTA is tapped; fall back to a Kolkata city guide when unavailable.
-3. Animate location lock, crowd-signal mapping, and destination curation before showing picks.
-4. Render image-led recommendations, place stories, and preference controls.
-5. Show origin/destination markers, crowd heat zones, and drive/walk/cycle time estimates on the route map.
+```sh
+cd backend
+mvn spring-boot:run
+```
+
+In another terminal, start the app:
+
+```sh
+npx expo start
+```
+
+`npm run web` is also supported. Native Android keeps the interactive map; web presents compatible recommendation and route-summary screens.
+
+## Database setup
+
+Execute the scripts in `database/sql/` in numeric order. They are safe to rerun and include the merged Member 3 data plus a small Kolkata demo set used by the frontend. Member 5 data is not included or changed.
+
+## API endpoints
+
+- `GET /api/v1/health`
+- `POST /api/v1/recommendations`
+- `GET /api/v1/places/{id}?originLat=...&originLng=...`
+- `GET /api/v1/places/{id}/route?originLat=...&originLng=...&mode=foot-walking`
+
+Recommendations are scored by the merged AI engine using distance, interests, hiddenness, crowd, accessibility, and curation. Crowd estimates come from the `crowd_profiles` table for the current India time bucket. If `ORS_API_KEY` is absent, route requests return a usable straight-line estimate instead of failing.
+
+Never commit `.env` files, database passwords, Supabase URLs, or API keys.

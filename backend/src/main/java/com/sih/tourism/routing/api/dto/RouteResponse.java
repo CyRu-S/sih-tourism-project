@@ -3,26 +3,27 @@ package com.sih.tourism.routing.api.dto;
 import java.util.List;
 
 public class RouteResponse {
-    private String provider;
-    private Double distanceMeters;
-    private Double durationSeconds;
-    private Geometry geometry;
-    private Boolean cached;
+    private final String provider;
+    private final Double distanceMeters;
+    private final Double durationSeconds;
+    private final Geometry geometry;
+    private final Boolean cached;
 
-    public RouteResponse(String provider, Double distanceMeters, Double durationSeconds, Geometry geometry, Boolean cached) {
-        this.provider = provider;
-        this.distanceMeters = distanceMeters;
-        this.durationSeconds = durationSeconds;
-        this.geometry = geometry;
-        this.cached = cached;
+    private RouteResponse(Builder builder) {
+        provider = builder.provider;
+        distanceMeters = builder.distanceMeters;
+        durationSeconds = builder.durationSeconds;
+        geometry = builder.geometry;
+        cached = builder.cached;
     }
 
     public String getProvider() { return provider; }
     public Double getDistanceMeters() { return distanceMeters; }
     public Double getDurationSeconds() { return durationSeconds; }
+    public Double getDistanceKm() { return distanceMeters == null ? null : Math.round(distanceMeters / 100.0) / 10.0; }
+    public Double getDurationMinutes() { return durationSeconds == null ? null : Math.round(durationSeconds / 6.0) / 10.0; }
     public Geometry getGeometry() { return geometry; }
     public Boolean getCached() { return cached; }
-
     public static Builder builder() { return new Builder(); }
 
     public static class Builder {
@@ -31,34 +32,27 @@ public class RouteResponse {
         private Double durationSeconds;
         private Geometry geometry;
         private Boolean cached;
-        public Builder provider(String provider) { this.provider = provider; return this; }
-        public Builder distanceMeters(Double distanceMeters) { this.distanceMeters = distanceMeters; return this; }
-        public Builder durationSeconds(Double durationSeconds) { this.durationSeconds = durationSeconds; return this; }
-        public Builder geometry(Geometry geometry) { this.geometry = geometry; return this; }
-        public Builder cached(Boolean cached) { this.cached = cached; return this; }
-        public RouteResponse build() { return new RouteResponse(provider, distanceMeters, durationSeconds, geometry, cached); }
+        public Builder provider(String value) { provider = value; return this; }
+        public Builder distanceMeters(Double value) { distanceMeters = value; return this; }
+        public Builder durationSeconds(Double value) { durationSeconds = value; return this; }
+        public Builder geometry(Geometry value) { geometry = value; return this; }
+        public Builder cached(Boolean value) { cached = value; return this; }
+        public RouteResponse build() { return new RouteResponse(this); }
     }
 
     public static class Geometry {
-        private String type;
-        private List<List<Double>> coordinates;
-
-        public Geometry(String type, List<List<Double>> coordinates) {
-            this.type = type;
-            this.coordinates = coordinates;
-        }
-
+        private final String type;
+        private final List<List<Double>> coordinates;
+        private Geometry(GeometryBuilder builder) { type = builder.type; coordinates = builder.coordinates; }
         public String getType() { return type; }
         public List<List<Double>> getCoordinates() { return coordinates; }
-
         public static GeometryBuilder builder() { return new GeometryBuilder(); }
-
         public static class GeometryBuilder {
             private String type;
             private List<List<Double>> coordinates;
-            public GeometryBuilder type(String type) { this.type = type; return this; }
-            public GeometryBuilder coordinates(List<List<Double>> coordinates) { this.coordinates = coordinates; return this; }
-            public Geometry build() { return new Geometry(type, coordinates); }
+            public GeometryBuilder type(String value) { type = value; return this; }
+            public GeometryBuilder coordinates(List<List<Double>> value) { coordinates = value; return this; }
+            public Geometry build() { return new Geometry(this); }
         }
     }
 }

@@ -20,7 +20,7 @@ export default function PlaceDetailsScreen({ route, navigation }) {
   const heroOpacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    getPlace(route.params.placeId).then((nextPlace) => { setPlace(nextPlace); setReviews(seedReview(nextPlace)); }).catch((err) => setError(err.message));
+    getPlace(route.params.placeId, route.params.origin).then((nextPlace) => { setPlace(nextPlace); setReviews(seedReview(nextPlace)); }).catch((err) => setError(err.message));
     Animated.timing(heroOpacity, { toValue: 1, duration: 460, useNativeDriver: true }).start();
   }, [route.params.placeId, heroOpacity]);
 

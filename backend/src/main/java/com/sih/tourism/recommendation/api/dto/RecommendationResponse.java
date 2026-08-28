@@ -2,29 +2,42 @@ package com.sih.tourism.recommendation.api.dto;
 
 import com.sih.tourism.crowd.domain.CrowdEstimate;
 
+import java.util.List;
 import java.util.Map;
 
 public class RecommendationResponse {
-    private Long placeId;
-    private String name;
-    private String category;
-    private Location location;
-    private Double distanceKm;
-    private Integer score;
-    private CrowdEstimate estimatedCrowd;
-    private Map<String, Double> scoreBreakdown;
-    private String why;
+    private final Long placeId;
+    private final String name;
+    private final String category;
+    private final Location location;
+    private final Double distanceKm;
+    private final Integer score;
+    private final CrowdEstimate estimatedCrowd;
+    private final Map<String, Double> scoreBreakdown;
+    private final String why;
+    private final String description;
+    private final List<String> tags;
+    private final String bestVisitTime;
+    private final String accessibility;
+    private final Photo photo;
+    private final String sourceAttribution;
 
-    public RecommendationResponse(Long placeId, String name, String category, Location location, Double distanceKm, Integer score, CrowdEstimate estimatedCrowd, Map<String, Double> scoreBreakdown, String why) {
-        this.placeId = placeId;
-        this.name = name;
-        this.category = category;
-        this.location = location;
-        this.distanceKm = distanceKm;
-        this.score = score;
-        this.estimatedCrowd = estimatedCrowd;
-        this.scoreBreakdown = scoreBreakdown;
-        this.why = why;
+    private RecommendationResponse(Builder builder) {
+        placeId = builder.placeId;
+        name = builder.name;
+        category = builder.category;
+        location = builder.location;
+        distanceKm = builder.distanceKm;
+        score = builder.score;
+        estimatedCrowd = builder.estimatedCrowd;
+        scoreBreakdown = builder.scoreBreakdown;
+        why = builder.why;
+        description = builder.description;
+        tags = builder.tags;
+        bestVisitTime = builder.bestVisitTime;
+        accessibility = builder.accessibility;
+        photo = builder.photo;
+        sourceAttribution = builder.sourceAttribution;
     }
 
     public Long getPlaceId() { return placeId; }
@@ -36,6 +49,12 @@ public class RecommendationResponse {
     public CrowdEstimate getEstimatedCrowd() { return estimatedCrowd; }
     public Map<String, Double> getScoreBreakdown() { return scoreBreakdown; }
     public String getWhy() { return why; }
+    public String getDescription() { return description; }
+    public List<String> getTags() { return tags; }
+    public String getBestVisitTime() { return bestVisitTime; }
+    public String getAccessibility() { return accessibility; }
+    public Photo getPhoto() { return photo; }
+    public String getSourceAttribution() { return sourceAttribution; }
 
     public static Builder builder() { return new Builder(); }
 
@@ -49,42 +68,30 @@ public class RecommendationResponse {
         private CrowdEstimate estimatedCrowd;
         private Map<String, Double> scoreBreakdown;
         private String why;
-
-        public Builder placeId(Long placeId) { this.placeId = placeId; return this; }
-        public Builder name(String name) { this.name = name; return this; }
-        public Builder category(String category) { this.category = category; return this; }
-        public Builder location(Location location) { this.location = location; return this; }
-        public Builder distanceKm(Double distanceKm) { this.distanceKm = distanceKm; return this; }
-        public Builder score(Integer score) { this.score = score; return this; }
-        public Builder estimatedCrowd(CrowdEstimate estimatedCrowd) { this.estimatedCrowd = estimatedCrowd; return this; }
-        public Builder scoreBreakdown(Map<String, Double> scoreBreakdown) { this.scoreBreakdown = scoreBreakdown; return this; }
-        public Builder why(String why) { this.why = why; return this; }
-        
-        public RecommendationResponse build() { 
-            return new RecommendationResponse(placeId, name, category, location, distanceKm, score, estimatedCrowd, scoreBreakdown, why); 
-        }
+        private String description;
+        private List<String> tags = List.of();
+        private String bestVisitTime;
+        private String accessibility;
+        private Photo photo;
+        private String sourceAttribution;
+        public Builder placeId(Long value) { placeId = value; return this; }
+        public Builder name(String value) { name = value; return this; }
+        public Builder category(String value) { category = value; return this; }
+        public Builder location(Location value) { location = value; return this; }
+        public Builder distanceKm(Double value) { distanceKm = value; return this; }
+        public Builder score(Integer value) { score = value; return this; }
+        public Builder estimatedCrowd(CrowdEstimate value) { estimatedCrowd = value; return this; }
+        public Builder scoreBreakdown(Map<String, Double> value) { scoreBreakdown = value; return this; }
+        public Builder why(String value) { why = value; return this; }
+        public Builder description(String value) { description = value; return this; }
+        public Builder tags(List<String> value) { tags = value == null ? List.of() : List.copyOf(value); return this; }
+        public Builder bestVisitTime(String value) { bestVisitTime = value; return this; }
+        public Builder accessibility(String value) { accessibility = value; return this; }
+        public Builder photo(Photo value) { photo = value; return this; }
+        public Builder sourceAttribution(String value) { sourceAttribution = value; return this; }
+        public RecommendationResponse build() { return new RecommendationResponse(this); }
     }
 
-    public static class Location {
-        private Double lat;
-        private Double lng;
-
-        public Location(Double lat, Double lng) {
-            this.lat = lat;
-            this.lng = lng;
-        }
-
-        public Double getLat() { return lat; }
-        public Double getLng() { return lng; }
-
-        public static LocationBuilder builder() { return new LocationBuilder(); }
-
-        public static class LocationBuilder {
-            private Double lat;
-            private Double lng;
-            public LocationBuilder lat(Double lat) { this.lat = lat; return this; }
-            public LocationBuilder lng(Double lng) { this.lng = lng; return this; }
-            public Location build() { return new Location(lat, lng); }
-        }
-    }
+    public record Location(Double lat, Double lng) { }
+    public record Photo(String url, String credit, String source) { }
 }

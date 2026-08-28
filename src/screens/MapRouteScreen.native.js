@@ -24,9 +24,9 @@ export default function MapRouteScreen({ route, navigation }) {
 
   const loadRoute = useCallback(async () => {
     setError(null);
-    try { setRouteData(await getRoute(place.placeId, origin)); }
+    try { setRouteData(await getRoute(place.placeId, origin, { drive: 'driving-car', walk: 'foot-walking', cycle: 'cycling-regular' }[mode])); }
     catch { setError('We could not refresh the route. Your journey is still pinned on the map.'); }
-  }, [place.placeId, origin]);
+  }, [place.placeId, origin, mode]);
 
   useEffect(() => {
     loadRoute();

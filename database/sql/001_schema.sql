@@ -2,7 +2,7 @@
 -- Member 3: PostgreSQL/Supabase database foundation
 
 -- 1. places table
-CREATE TABLE places (
+CREATE TABLE IF NOT EXISTS places (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(140) NOT NULL,
     description TEXT NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE places (
 );
 
 -- 2. place_tags table
-CREATE TABLE place_tags (
+CREATE TABLE IF NOT EXISTS place_tags (
     place_id BIGINT NOT NULL,
     tag VARCHAR(40) NOT NULL,
     PRIMARY KEY (place_id, tag),
@@ -34,7 +34,7 @@ CREATE TABLE place_tags (
 );
 
 -- 3. crowd_profiles table
-CREATE TABLE crowd_profiles (
+CREATE TABLE IF NOT EXISTS crowd_profiles (
     place_id BIGINT NOT NULL,
     day_type VARCHAR(10) NOT NULL CHECK (day_type IN ('WEEKDAY', 'WEEKEND')),
     time_bucket VARCHAR(15) NOT NULL CHECK (time_bucket IN ('MORNING', 'AFTERNOON', 'EVENING', 'NIGHT')),

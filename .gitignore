@@ -4,3 +4,8 @@ node_modules/
 dist/
 android/
 ios/
+.env
+.env.*
+!.env.example
+!backend/.env.example
+target/
