@@ -4,7 +4,7 @@ An Expo SDK 54 tourism app with a Spring Boot backend, Supabase PostgreSQL datab
 
 ## Project layout
 
-- `App.js`, `src/` — Expo mobile/web application.
+- `frontend/` — Expo SDK 54 mobile/web application.
 - `backend/` — Spring Boot API and merged recommendation engine.
 - `database/` — Supabase schema, indexes, and safe demo seed scripts.
 
@@ -13,10 +13,11 @@ An Expo SDK 54 tourism app with a Spring Boot backend, Supabase PostgreSQL datab
 Install the Expo SDK 54 dependencies:
 
 ```sh
+cd frontend
 npm ci
 ```
 
-Copy `.env.example` to `.env` and set `EXPO_PUBLIC_API_URL`. The Android emulator uses `http://10.0.2.2:8010`; a physical phone must use the computer's LAN address.
+Copy `frontend/.env.example` to `frontend/.env` and set `EXPO_PUBLIC_API_URL`. The Android emulator uses `http://10.0.2.2:8010`; a physical phone must use the computer's LAN address.
 
 Copy `backend/.env.example` to `backend/.env`, add the Supabase JDBC details, then start the API:
 
@@ -28,6 +29,7 @@ mvn spring-boot:run
 In another terminal, start the app:
 
 ```sh
+cd frontend
 npx expo start
 ```
 
