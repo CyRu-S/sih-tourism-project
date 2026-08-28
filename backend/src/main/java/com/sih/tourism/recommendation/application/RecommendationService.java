@@ -39,7 +39,7 @@ public class RecommendationService {
     public List<RecommendationResponse> getRecommendations(RecommendationRequest request) {
         int maxDistanceKm = request.getMaxDistanceKm() == null ? 15 : request.getMaxDistanceKm();
         int limit = request.getLimit() == null ? 5 : request.getLimit();
-        List<Place> places = placeService.getCandidatePlaces(request.getLocation().getLat(), request.getLocation().getLng(), maxDistanceKm)
+        List<Place> places = placeService.getActivePlaces()
                 .stream().filter(place -> matchesCategory(place, request.getCategory())).toList();
         Map<Long, CrowdEstimate> crowds = places.stream()
                 .collect(Collectors.toMap(Place::getId, place -> crowdService.estimateCrowd(place.getId())));

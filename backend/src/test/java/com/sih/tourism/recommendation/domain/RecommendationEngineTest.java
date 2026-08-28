@@ -62,6 +62,20 @@ class RecommendationEngineTest {
         assertEquals(List.of(1L, 3L, 2L), results.stream().map(result -> result.candidate().placeId()).toList());
     }
 
+    @Test
+    void distantCandidatesRemainEligibleAndAreStillScored() {
+        RecommendationQuery query = new RecommendationQuery(
+                22.5726, 88.3639, Set.of("heritage"), 15, CrowdPreference.ANY, Set.of(), 5);
+        RecommendationCandidate distant = candidate(99L, "Distant Heritage", "heritage", Set.of("heritage"), 27.0073, 76.6065,
+                30, 85, 90, false, true, false, CrowdLevel.LOW, 0.25);
+
+        List<RecommendationResult> results = engine.rank(query, List.of(distant));
+
+        assertEquals(1, results.size());
+        assertTrue(results.get(0).distanceKm() > 15);
+        assertEquals(0.0, results.get(0).scoreBreakdown().distance());
+    }
+
     private RecommendationCandidate candidate(
             Long id, String name, String category, Set<String> tags,
             double latitude, double longitude, int hidden, int popularity, int curation,

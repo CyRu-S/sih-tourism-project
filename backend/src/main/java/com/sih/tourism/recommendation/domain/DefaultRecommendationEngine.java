@@ -55,11 +55,9 @@ public final class DefaultRecommendationEngine implements RecommendationEngine {
     }
 
     private boolean isEligible(RecommendationQuery query, RecommendationResult result) {
-        boolean withinDistance = query.maxDistanceKm() > 0
-                && result.distanceKm() <= query.maxDistanceKm();
         boolean wheelchairRequired = query.accessibilityNeeds() != null
                 && query.accessibilityNeeds().contains(AccessibilityNeed.WHEELCHAIR);
-        return withinDistance && (!wheelchairRequired || result.candidate().wheelchairAccessible());
+        return !wheelchairRequired || result.candidate().wheelchairAccessible();
     }
 
     private List<RecommendationResult> diversify(List<RecommendationResult> results, int limit) {

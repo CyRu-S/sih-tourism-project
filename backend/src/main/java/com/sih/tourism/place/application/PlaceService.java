@@ -16,12 +16,9 @@ public class PlaceService {
         this.placeRepository = placeRepository;
     }
 
-    public List<Place> getCandidatePlaces(double lat, double lng, double maxDistanceKm) {
-        double latDelta = maxDistanceKm / 111.32;
-        double longitudeDivisor = 111.32 * Math.cos(Math.toRadians(lat));
-        double lonDelta = Math.abs(longitudeDivisor) < 0.0001 ? 180 : maxDistanceKm / longitudeDivisor;
-        return placeRepository.findCandidatesInBoundingBox(lat - latDelta, lat + latDelta, lng - lonDelta, lng + lonDelta)
-                .stream().map(this::mapToDomain).collect(Collectors.toList());
+    public List<Place> getActivePlaces() {
+        return placeRepository.findByActiveTrueOrderByIdAsc().stream()
+                .map(this::mapToDomain).collect(Collectors.toList());
     }
 
     public Place getPlaceById(Long id) {
