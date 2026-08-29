@@ -3,6 +3,7 @@ package com.sih.tourism.common.exception;
 import com.sih.tourism.common.api.ApiError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -36,6 +37,17 @@ public class GlobalExceptionHandler {
         return ApiError.builder()
                 .code("INVALID_REQUEST")
                 .message(ex.getMessage())
+                .requestId(UUID.randomUUID().toString())
+                .build();
+    }
+
+    @ExceptionHandler(DataAccessResourceFailureException.class)
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+    public ApiError handleDatabaseUnavailable(DataAccessResourceFailureException ex) {
+        log.error("Database connection unavailable", ex);
+        return ApiError.builder()
+                .code("DATABASE_UNAVAILABLE")
+                .message("The database connection is temporarily unavailable. Please try again shortly.")
                 .requestId(UUID.randomUUID().toString())
                 .build();
     }
