@@ -6,6 +6,7 @@ import MapRouteScreen from '../screens/MapRouteScreen';
 import PlaceDetailsScreen from '../screens/PlaceDetailsScreen';
 import PreferencesScreen from '../screens/PreferencesScreen';
 import RecommendationsScreen from '../screens/RecommendationsScreen';
+import ItineraryImproviserScreen from '../screens/ItineraryImproviserScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +20,7 @@ export default function AppNavigator() {
       <Stack.Screen name="ExploreMap" component={ExploreMapScreen} />
       <Stack.Screen name="PlaceDetails" component={PlaceDetailsScreen} />
       <Stack.Screen name="MapRoute" component={MapRouteScreen} />
+      <Stack.Screen name="ItineraryImproviser" component={ItineraryImproviserScreen} />
     </Stack.Navigator>
   );
 }

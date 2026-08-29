@@ -1,0 +1,85 @@
+-- Seed Data for crowd_profiles
+-- Member 3: Demo crowd profiles (8 places x 2 day types x 4 time buckets = 64 records)
+-- IMPORTANT: These crowd values are simulated/demo values and NOT real-world measurements.
+
+INSERT INTO crowd_profiles (place_id, day_type, time_bucket, crowd_index) VALUES
+-- Chand Baori (101)
+(101, 'WEEKDAY', 'MORNING', 0.250),
+(101, 'WEEKDAY', 'AFTERNOON', 0.450),
+(101, 'WEEKDAY', 'EVENING', 0.550),
+(101, 'WEEKDAY', 'NIGHT', 0.100),
+(101, 'WEEKEND', 'MORNING', 0.450),
+(101, 'WEEKEND', 'AFTERNOON', 0.800),
+(101, 'WEEKEND', 'EVENING', 0.900),
+(101, 'WEEKEND', 'NIGHT', 0.200),
+
+-- Auniati Satra (102)
+(102, 'WEEKDAY', 'MORNING', 0.300),
+(102, 'WEEKDAY', 'AFTERNOON', 0.350),
+(102, 'WEEKDAY', 'EVENING', 0.600),
+(102, 'WEEKDAY', 'NIGHT', 0.050),
+(102, 'WEEKEND', 'MORNING', 0.500),
+(102, 'WEEKEND', 'AFTERNOON', 0.550),
+(102, 'WEEKEND', 'EVENING', 0.800),
+(102, 'WEEKEND', 'NIGHT', 0.100),
+
+-- Pochampally Ikat Weaving Cluster (103)
+(103, 'WEEKDAY', 'MORNING', 0.150),
+(103, 'WEEKDAY', 'AFTERNOON', 0.300),
+(103, 'WEEKDAY', 'EVENING', 0.400),
+(103, 'WEEKDAY', 'NIGHT', 0.020),
+(103, 'WEEKEND', 'MORNING', 0.300),
+(103, 'WEEKEND', 'AFTERNOON', 0.600),
+(103, 'WEEKEND', 'EVENING', 0.700),
+(103, 'WEEKEND', 'NIGHT', 0.050),
+
+-- Bhadrawati Palace (104)
+(104, 'WEEKDAY', 'MORNING', 0.200),
+(104, 'WEEKDAY', 'AFTERNOON', 0.400),
+(104, 'WEEKDAY', 'EVENING', 0.500),
+(104, 'WEEKDAY', 'NIGHT', 0.150),
+(104, 'WEEKEND', 'MORNING', 0.350),
+(104, 'WEEKEND', 'AFTERNOON', 0.650),
+(104, 'WEEKEND', 'EVENING', 0.750),
+(104, 'WEEKEND', 'NIGHT', 0.250),
+
+-- Majuli River Island (105)
+(105, 'WEEKDAY', 'MORNING', 0.200),
+(105, 'WEEKDAY', 'AFTERNOON', 0.400),
+(105, 'WEEKDAY', 'EVENING', 0.500),
+(105, 'WEEKDAY', 'NIGHT', 0.050),
+(105, 'WEEKEND', 'MORNING', 0.400),
+(105, 'WEEKEND', 'AFTERNOON', 0.700),
+(105, 'WEEKEND', 'EVENING', 0.800),
+(105, 'WEEKEND', 'NIGHT', 0.100),
+
+-- Muzhappilangad Drive-in Beach (106)
+(106, 'WEEKDAY', 'MORNING', 0.100),
+(106, 'WEEKDAY', 'AFTERNOON', 0.300),
+(106, 'WEEKDAY', 'EVENING', 0.650),
+(106, 'WEEKDAY', 'NIGHT', 0.200),
+(106, 'WEEKEND', 'MORNING', 0.300),
+(106, 'WEEKEND', 'AFTERNOON', 0.700),
+(106, 'WEEKEND', 'EVENING', 0.950),
+(106, 'WEEKEND', 'NIGHT', 0.400),
+
+-- Dzukou Valley (107)
+(107, 'WEEKDAY', 'MORNING', 0.100),
+(107, 'WEEKDAY', 'AFTERNOON', 0.250),
+(107, 'WEEKDAY', 'EVENING', 0.300),
+(107, 'WEEKDAY', 'NIGHT', 0.010),
+(107, 'WEEKEND', 'MORNING', 0.300),
+(107, 'WEEKEND', 'AFTERNOON', 0.500),
+(107, 'WEEKEND', 'EVENING', 0.450),
+(107, 'WEEKEND', 'NIGHT', 0.020),
+
+-- Gandikota Gorge (108)
+(108, 'WEEKDAY', 'MORNING', 0.150),
+(108, 'WEEKDAY', 'AFTERNOON', 0.350),
+(108, 'WEEKDAY', 'EVENING', 0.600),
+(108, 'WEEKDAY', 'NIGHT', 0.050),
+(108, 'WEEKEND', 'MORNING', 0.400),
+(108, 'WEEKEND', 'AFTERNOON', 0.750),
+(108, 'WEEKEND', 'EVENING', 0.850),
+(108, 'WEEKEND', 'NIGHT', 0.100)
+ON CONFLICT (place_id, day_type, time_bucket) DO NOTHING;

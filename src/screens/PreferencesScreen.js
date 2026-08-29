@@ -9,6 +9,10 @@ const categories = ['all', 'heritage', 'nature', 'food', 'adventure'];
 const interests = ['photography', 'peaceful', 'craft', 'walking', 'street-food'];
 const distances = [5, 10, 15, 25];
 const crowds = ['LOW', 'MEDIUM', 'ANY'];
+const budgets = ['5K', '10K', '15K', '25K+'];
+const styles_list = ['relaxed', 'balanced', 'adventure', 'off-beat'];
+const groups = ['solo', 'couple', 'family', 'friends'];
+const discoveries = ['popular', 'mixed', 'hidden'];
 
 export default function PreferencesScreen({ route, navigation }) {
   const { preferences, setPreferences } = usePreferences();
@@ -22,6 +26,10 @@ export default function PreferencesScreen({ route, navigation }) {
     <View style={styles.section}><Text style={styles.label}>What matters to you?</Text><Text style={styles.helper}>Fine-tune the mood without narrowing the category too much.</Text><View style={styles.chips}>{interests.map((interest) => <InterestChip key={interest} label={interest} selected={draft.interests.includes(interest)} onPress={() => toggle(interest)} />)}</View></View>
     <View style={styles.section}><Text style={styles.label}>How far feels right?</Text><View style={styles.options}>{distances.map((distance) => <Pressable key={distance} onPress={() => setDraft({ ...draft, maxDistanceKm: distance })} style={[styles.option, draft.maxDistanceKm === distance && styles.optionSelected]}><Text style={[styles.optionText, draft.maxDistanceKm === distance && styles.optionTextSelected]}>{distance} km</Text></Pressable>)}</View></View>
     <View style={styles.section}><Text style={styles.label}>Crowd preference</Text><View style={styles.options}>{crowds.map((crowd) => <Pressable key={crowd} onPress={() => setDraft({ ...draft, crowdPreference: crowd })} style={[styles.option, draft.crowdPreference === crowd && styles.optionSelected]}><Text style={[styles.optionText, draft.crowdPreference === crowd && styles.optionTextSelected]}>{crowd === 'ANY' ? 'Any level' : crowd}</Text></Pressable>)}</View></View>
+    <View style={styles.section}><Text style={styles.label}>Estimated budget</Text><View style={styles.options}>{budgets.map((b) => <Pressable key={b} onPress={() => setDraft({ ...draft, budget: b })} style={[styles.option, draft.budget === b && styles.optionSelected]}><Text style={[styles.optionText, draft.budget === b && styles.optionTextSelected]}>₹{b}</Text></Pressable>)}</View></View>
+    <View style={styles.section}><Text style={styles.label}>Travel style</Text><View style={styles.options}>{styles_list.map((s) => <Pressable key={s} onPress={() => setDraft({ ...draft, travelStyle: s })} style={[styles.option, draft.travelStyle === s && styles.optionSelected]}><Text style={[styles.optionText, draft.travelStyle === s && styles.optionTextSelected]} style={{ textTransform: 'capitalize' }}>{s}</Text></Pressable>)}</View></View>
+    <View style={styles.section}><Text style={styles.label}>Group type</Text><View style={styles.options}>{groups.map((g) => <Pressable key={g} onPress={() => setDraft({ ...draft, groupType: g })} style={[styles.option, draft.groupType === g && styles.optionSelected]}><Text style={[styles.optionText, draft.groupType === g && styles.optionTextSelected]} style={{ textTransform: 'capitalize' }}>{g}</Text></Pressable>)}</View></View>
+    <View style={styles.section}><Text style={styles.label}>Discovery Preference</Text><View style={styles.options}>{discoveries.map((d) => <Pressable key={d} onPress={() => setDraft({ ...draft, hiddenPreference: d })} style={[styles.option, draft.hiddenPreference === d && styles.optionSelected]}><Text style={[styles.optionText, draft.hiddenPreference === d && styles.optionTextSelected]} style={{ textTransform: 'capitalize' }}>{d === 'hidden' ? 'Hidden Gems' : d}</Text></Pressable>)}</View></View>
     <Pressable style={({ pressed }) => [styles.primary, pressed && styles.primaryPressed]} onPress={discover}><View><Text style={styles.primaryHint}>READY TO SEARCH</Text><Text style={styles.primaryText}>Fetch matching places</Text></View><Text style={styles.primaryArrow}>→</Text></Pressable>
   </ScrollView>;
 }

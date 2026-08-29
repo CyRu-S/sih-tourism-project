@@ -29,17 +29,17 @@ export default function HomeScreen({ navigation }) {
   return <SafeAreaView style={styles.safe}>
     <StatusBar style="dark" />
     <View style={styles.lightOne} /><View style={styles.lightTwo} /><View style={styles.lightThree} />
-    <View style={styles.nav}><View style={styles.navLogo}><VoyageLogo size={33} /></View><View style={styles.status}><View style={styles.statusDot} /><Text style={styles.statusText}>KOLKATA</Text></View></View>
-    <View style={styles.hero}><View style={styles.logoHalo} /><Animated.View style={logoStyle}><VoyageLogo size={206} /></Animated.View><Text style={styles.heroCaption}>LOCAL STORIES, LIGHTLY CURATED</Text></View>
+    <View style={styles.nav}><View style={styles.navLogo}><VoyageLogo size={33} /></View><View style={styles.status}><View style={styles.statusDot} /><Text style={styles.statusText}>AI PROTOTYPE</Text></View></View>
+    <View style={styles.hero}><View style={styles.logoHalo} /><Animated.View style={logoStyle}><VoyageLogo size={206} /></Animated.View><Text style={styles.heroCaption}>AI EXPERIENCE IMPROVISER</Text></View>
     <Animated.View style={[styles.content, contentStyle]}>
-      <Text style={styles.title}>Go gently.{`\n`}See more.</Text>
-      <Text style={styles.copy}>Voyage brings four close-by places into focus, so a good day can begin without a plan.</Text>
-      <View style={styles.glassNote}><View style={styles.noteIcon}><Text style={styles.noteIconText}>04</Text></View><View><Text style={styles.noteLabel}>CLOSE TO YOU</Text><Text style={styles.noteText}>A small edit of nearby places</Text></View></View>
+      <Text style={styles.title}>Discover places{`\n`}differently.</Text>
+      <Text style={styles.copy}>Personalized journeys built around hidden destinations, local stories and meaningful experiences.</Text>
+      <View style={styles.glassNote}><View style={styles.noteIcon}><Text style={styles.noteIconText}>✨</Text></View><View><Text style={styles.noteLabel}>PERSONALIZED FLOW</Text><Text style={styles.noteText}>Interests → Hidden Places → Local Stories</Text></View></View>
       <Pressable style={({ pressed }) => [styles.primary, pressed && styles.primaryPressed]} onPress={() => navigation.navigate('Discovery')}>
         <Text style={styles.primaryText}>Start exploring</Text><View style={styles.arrowGlass}><Text style={styles.arrow}>→</Text></View>
       </Pressable>
     </Animated.View>
-    <View style={styles.footer}><View style={styles.footerLine} /><Text style={styles.footerText}>VOYAGE / CITY GUIDE</Text></View>
+    <View style={styles.footer}><View style={styles.footerLine} /><Text style={styles.footerText}>VOYAGE / EXPERIENCE IMPROVISER</Text></View>
   </SafeAreaView>;
 }
 

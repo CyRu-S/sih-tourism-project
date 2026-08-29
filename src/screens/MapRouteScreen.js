@@ -68,6 +68,12 @@ export default function MapRouteScreen({ route, navigation }) {
       <View style={styles.modeRow}>{modes.map((item) => <Pressable key={item.id} onPress={() => setMode(item.id)} style={[styles.mode, mode === item.id && styles.modeActive]}><Text style={[styles.modeLabel, mode === item.id && styles.modeLabelActive]}>{item.label}</Text><Text style={[styles.modeTime, mode === item.id && styles.modeTimeActive]}>{Math.round(baseDuration * item.multiplier)} min</Text></Pressable>)}</View>
       <View style={styles.routeDetail}><View style={styles.routeIcon}><Text style={styles.routeIconText}>{mode === 'walk' ? 'W' : mode === 'cycle' ? 'C' : 'D'}</Text></View><View style={styles.routeDetailCopy}><Text style={styles.arrival}>ARRIVE IN ABOUT {duration} MIN</Text><Text style={styles.routeHint}>{mode === 'walk' ? 'A relaxed, street-level way to arrive.' : mode === 'cycle' ? 'An easy-paced ride through the city.' : 'The smoothest route based on the live map.'}</Text></View><Text style={styles.arrow}>›</Text></View>
       <View style={styles.footerRow}><View style={styles.crowdStatus}><View style={[styles.crowdDot, { backgroundColor: heat.strong }]} /><Text style={styles.crowdText}>{crowd.level} CROWD</Text></View><Pressable onPress={() => navigation.navigate('PlaceDetails', { placeId: place.placeId, origin, preview: place })}><Text style={styles.storyLink}>Place story</Text></Pressable></View>
+      <Pressable 
+        style={{ marginTop: 12, backgroundColor: colors.forest, paddingVertical: 12, borderRadius: 12, alignItems: 'center', justifyContent: 'center' }}
+        onPress={() => navigation.navigate('ItineraryImproviser', { place, origin })}
+      >
+        <Text style={{ color: colors.white, fontSize: 13, fontWeight: 'bold', letterSpacing: 0.8 }}>CREATE EXPERIENCE TRAIL →</Text>
+      </Pressable>
       {error && <Pressable onPress={loadRoute}><Text style={styles.error}>{error} Tap to retry.</Text></Pressable>}
     </Animated.View>
   </View>;
