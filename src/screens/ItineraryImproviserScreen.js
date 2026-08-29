@@ -29,7 +29,7 @@ export default function ItineraryImproviserScreen({ navigation }) {
         if (presetKey === 'budget') {
           setExplanation('🌱 AI: Budget adjusted to ₹9,800 (Saved ₹2,200). Private transport shifted to Metro line; premium hotel lunch replaced with village home-cooking (SDG 8).');
         } else if (presetKey === 'crowd') {
-          setExplanation('⚡ AI: Shifted Kumartuli Ghat to 6:30 AM & Spice Lane to 8:00 AM. Reduced peak afternoon exposures. Estimated crowd level: LOW.');
+          setExplanation('⚡ AI: Adjusted using demo crowd estimates. Shifted Kumartuli Ghat to 6:30 AM (LOW crowd) & Spice Lane to 8:00 AM (LOW crowd). Reduced peak afternoon exposures.');
         } else if (presetKey === 'local') {
           setExplanation('💎 AI: 2 active community experiences added! Replaced generic sightseeing with hands-on clay modeling (Gopal Pal) and cane weaving classes.');
         } else {
@@ -127,7 +127,7 @@ export default function ItineraryImproviserScreen({ navigation }) {
             </View>
             <View style={styles.snapshotCol}>
               <Text style={styles.snapLabel}>ESTIMATED BUDGET</Text>
-              <Text style={styles.snapValue} style={{ color: colors.forest, fontWeight: '900', fontSize: 16 }}>
+              <Text style={{ color: colors.forest, fontWeight: '900', fontSize: 16, marginTop: 2 }}>
                 ₹{itinerary.cost.toLocaleString('en-IN')}
               </Text>
             </View>
@@ -142,11 +142,26 @@ export default function ItineraryImproviserScreen({ navigation }) {
               <Text style={styles.snapValue}>{itinerary.experiencesCount} Guided</Text>
             </View>
           </View>
+          {activePreset === 'crowd' && (
+            <View style={[styles.snapshotGrid, { marginTop: 10, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.line, paddingTop: 10 }]}>
+              <View style={styles.snapshotCol}>
+                <Text style={styles.snapLabel}>CROWD ADJUSTED STOPS</Text>
+                <Text style={[styles.snapValue, { color: '#198754' }]}>2 Locations</Text>
+              </View>
+              <View style={styles.snapshotCol}>
+                <Text style={styles.snapLabel}>PEAK PERIODS AVOIDED</Text>
+                <Text style={[styles.snapValue, { color: '#198754' }]}>2 Periods</Text>
+              </View>
+            </View>
+          )}
         </View>
 
         {/* Sustainable/SDG Indicators */}
         <View style={styles.sdgCard}>
           <Text style={styles.sectionLabel}>SUSTAINABLE JOURNEY ALIGNMENT</Text>
+          <Text style={{ fontSize: 11, color: colors.muted, lineHeight: 16, marginBottom: 12 }}>
+            💡 Why this matters: Helping visitors discover quieter times and lesser-known places supports more balanced tourism and reduces concentration around heavily visited attractions (SDG 11).
+          </Text>
           <View style={styles.sdgRow}>
             <View style={styles.sdgBadge}>
               <Text style={styles.sdgNumber}>8</Text>

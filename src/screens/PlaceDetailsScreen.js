@@ -109,7 +109,7 @@ export default function PlaceDetailsScreen({ route, navigation }) {
 
       {/* Section D — Before You Visit */}
       <View style={styles.factContainer}>
-        <Text style={styles.containerLabel}>GOOD TO KNOW & RESPONSIBLE GUIDELINES</Text>
+        <Text style={styles.containerLabel}>CROWD PROFILE & GOOD TO KNOW</Text>
         <View style={styles.factRow}>
           <Fact label="BEST TIME" value={place.bestVisitTime} />
           <Fact label="ACCESS" value={place.accessibility} />
@@ -118,6 +118,31 @@ export default function PlaceDetailsScreen({ route, navigation }) {
             <CrowdBadge crowd={crowd} />
           </View>
         </View>
+
+        {/* Expose crowd score estimation */}
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12, backgroundColor: colors.moss, borderRadius: 10, padding: 10 }}>
+          <View>
+            <Text style={{ fontSize: 8, color: colors.muted, fontWeight: 'bold', letterSpacing: 0.8 }}>DEMO CROWD ESTIMATE</Text>
+            <Text style={{ fontSize: 13, fontWeight: 'bold', color: colors.ink, marginTop: 2 }}>
+              Score: {crowd.level === 'LOW' ? '28' : crowd.level === 'HIGH' ? '82' : '49'} / 100
+            </Text>
+          </View>
+          <Pressable 
+            style={{ backgroundColor: colors.forest, paddingHorizontal: 12, paddingVertical: 6, borderRadius: 8 }}
+            onPress={() => navigation.navigate('MapRoute', { place, origin })}
+          >
+            <Text style={{ color: colors.white, fontSize: 10, fontWeight: 'bold' }}>See Crowd Map</Text>
+          </Pressable>
+        </View>
+
+        {/* Warning recommendations for high crowd */}
+        {crowd.level === 'HIGH' && (
+          <View style={{ backgroundColor: '#FFF5F5', borderWidth: 1, borderColor: '#FFE3E3', padding: 10, borderRadius: 10, marginBottom: 12 }}>
+            <Text style={{ color: '#DC3545', fontSize: 11, fontWeight: 'bold', lineHeight: 16 }}>
+              ⚠️ Recommended: Peak hours detected. Consider visiting before 9:00 AM or use the AI Improviser below to optimize timing.
+            </Text>
+          </View>
+        )}
 
         <Text style={styles.tipsHeading}>Responsible Visitor Conduct:</Text>
         {storyData.responsibleTips.map((tip, index) => (

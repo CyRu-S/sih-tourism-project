@@ -35,6 +35,20 @@ export default function HomeScreen({ navigation }) {
       <Text style={styles.title}>Discover places{`\n`}differently.</Text>
       <Text style={styles.copy}>Personalized journeys built around hidden destinations, local stories and meaningful experiences.</Text>
       <View style={styles.glassNote}><View style={styles.noteIcon}><Text style={styles.noteIconText}>✨</Text></View><View><Text style={styles.noteLabel}>PERSONALIZED FLOW</Text><Text style={styles.noteText}>Interests → Hidden Places → Local Stories</Text></View></View>
+      <Pressable 
+        style={({ pressed }) => [
+          styles.glassNote, 
+          { marginTop: 10, backgroundColor: 'rgba(255,107,107,.12)', borderColor: 'rgba(255,107,107,.2)' },
+          pressed && { opacity: 0.8 }
+        ]} 
+        onPress={() => navigation.navigate('MapRoute', { place: { placeId: 101, name: 'Kumartuli River Ghat', distanceKm: 5.8 }, origin: demoLocation })}
+      >
+        <View style={[styles.noteIcon, { backgroundColor: 'rgba(255,107,107,.2)' }]}><Text style={[styles.noteIconText, { color: colors.coral }]}>📊</Text></View>
+        <View style={{ flex: 1 }}>
+          <Text style={[styles.noteLabel, { color: colors.coral }]}>PLAN AROUND THE CROWD</Text>
+          <Text style={styles.noteText}>Explore Crowd & Experience Map ›</Text>
+        </View>
+      </Pressable>
       <Pressable style={({ pressed }) => [styles.primary, pressed && styles.primaryPressed]} onPress={() => navigation.navigate('Discovery')}>
         <Text style={styles.primaryText}>Start exploring</Text><View style={styles.arrowGlass}><Text style={styles.arrow}>→</Text></View>
       </Pressable>
