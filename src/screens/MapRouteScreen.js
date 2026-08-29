@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, Pressable, StyleSheet, Text as NativeText, View } from 'react-native';
-import MapView, { Circle, Marker, Polyline } from 'react-native-maps';
+import MapView, { Circle, Marker, Polyline, PROVIDER_GOOGLE } from 'react-native-maps';
 import { getRoute } from '../api/routeApi';
 import { crowdData } from '../data/crowdData';
 import { colors, fonts } from '../config/theme';
@@ -74,7 +74,7 @@ export default function MapRouteScreen({ route, navigation }) {
   return (
     <View style={styles.screen}>
       {/* Map View */}
-      <MapView ref={mapRef} style={styles.map} onMapReady={focusDestination} onPress={frameRoute} customMapStyle={mapStyle}>
+      <MapView provider={PROVIDER_GOOGLE} ref={mapRef} style={styles.map} onMapReady={focusDestination} onPress={frameRoute} customMapStyle={mapStyle}>
         
         {/* Heatmap Overlays for all places */}
         {crowdData.map(c => {

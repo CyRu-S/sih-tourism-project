@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, Image, Pressable, StyleSheet, Text as NativeText, View } from 'react-native';
-import MapView, { Circle, Marker } from 'react-native-maps';
+import MapView, { Circle, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { getRecommendations } from '../api/recommendationApi';
 import { usePreferences } from '../state/PreferenceContext';
 import { places as demoPlaces } from '../data/mockPlaces';
@@ -54,15 +54,18 @@ export default function ExploreMapScreen({ route, navigation }) {
   const crowdColor = crowdColors[selected?.estimatedCrowd?.level] || colors.blueGlow;
 
   return <View style={styles.screen}>
-    <MapView ref={mapRef} style={styles.map} customMapStyle={mapStyle} onMapReady={frameAll}>
+    <MapView provider={PROVIDER_GOOGLE} ref={mapRef} style={styles.map} customMapStyle={mapStyle} onMapReady={frameAll}>
       {places.map((place) => <CrowdField key={`field-${place.placeId}`} place={place} active={selected?.placeId === place.placeId} />)}
       <Marker coordinate={{ latitude: origin.lat, longitude: origin.lng }} title="Demo starting point"><View style={styles.userMarker}><View style={styles.userMarkerCore} /></View></Marker>
-      {places.map((place, index) => <Marker key={place.placeId} coordinate={{ latitude: place.location.lat, longitude: place.location.lng }} onPress={() => selectPlace(place)} title={place.name} description={place.category}>
-        <View style={[styles.photoPin, selected?.placeId === place.placeId && styles.photoPinSelected]}>
-          {place.photo && <Image source={{ uri: place.photo.url }} style={styles.pinImage} />}
-          <View style={[styles.pinIndex, selected?.placeId === place.placeId && styles.pinIndexSelected]}><Text style={styles.pinIndexText}>0{index + 1}</Text></View>
-        </View>
-      </Marker>)}
+      {places.map((place, index) => (
+        <PlaceMarker
+          key={place.placeId}
+          place={place}
+          index={index}
+          selected={selected?.placeId === place.placeId}
+          onPress={() => selectPlace(place)}
+        />
+      ))}
     </MapView>
 
     <View pointerEvents="none" style={styles.header}><View><Text style={styles.brand}>VOYAGE</Text><Text style={styles.headerLabel}>DISCOVER NEARBY</Text></View><View style={styles.live}><View style={styles.liveDot} /><Text style={styles.liveText}>MAP LIVE</Text></View></View>
@@ -84,6 +87,38 @@ function CrowdField({ place, active }) {
   const scale = active ? 1 : .48;
   return <><Circle center={center} radius={760 * scale} fillColor={heat[0]} strokeColor="transparent" /><Circle center={center} radius={420 * scale} fillColor={heat[1]} strokeColor="transparent" /><Circle center={center} radius={190 * scale} fillColor={heat[2]} strokeColor="transparent" /></>;
 }
+
+const PlaceMarker = ({ place, index, selected, onPress }) => {
+  const [tracksViewChanges, setTracksViewChanges] = useState(true);
+
+  // Re-enable tracking if selection state changes so the pin size animates properly on Android
+  useEffect(() => {
+    setTracksViewChanges(true);
+  }, [selected]);
+
+  return (
+    <Marker 
+      coordinate={{ latitude: place.location.lat, longitude: place.location.lng }} 
+      onPress={onPress} 
+      title={place.name} 
+      description={place.category}
+      tracksViewChanges={tracksViewChanges}
+    >
+      <View style={[styles.photoPin, selected && styles.photoPinSelected]}>
+        {place.photo && (
+          <Image 
+            source={{ uri: place.photo.url }} 
+            style={styles.pinImage} 
+            onLoad={() => setTracksViewChanges(false)}
+          />
+        )}
+        <View style={[styles.pinIndex, selected && styles.pinIndexSelected]}>
+          <Text style={styles.pinIndexText}>0{index + 1}</Text>
+        </View>
+      </View>
+    </Marker>
+  );
+};
 
 const mapStyle = [{ elementType: 'geometry', stylers: [{ color: '#e8f4fc' }] }, { elementType: 'labels.text.fill', stylers: [{ color: '#4a6681' }] }, { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#aee1fa' }] }, { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#ffffff' }] }, { featureType: 'poi', elementType: 'geometry', stylers: [{ color: '#d8eaf5' }] }, { featureType: 'transit', elementType: 'geometry', stylers: [{ color: '#d1e2ed' }] }];
 
