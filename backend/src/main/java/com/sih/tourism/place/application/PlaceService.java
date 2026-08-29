@@ -39,7 +39,7 @@ public class PlaceService {
                 .wheelchairAccessible(Boolean.TRUE.equals(entity.getWheelchairAccessible()))
                 .parkingAvailable(Boolean.TRUE.equals(entity.getParkingAvailable()))
                 .publicTransport(Boolean.TRUE.equals(entity.getPublicTransport()))
-                .walkingDifficulty(entity.getWalkingDifficulty()).tags(entity.getTags()).build();
+                .walkingDifficulty(entity.getWalkingDifficulty()).adminStatus(entity.getAdminStatus()).tags(entity.getTags()).build();
     }
 
     private int zeroIfNull(Integer value) { return value == null ? 0 : value; }

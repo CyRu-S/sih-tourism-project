@@ -47,6 +47,8 @@ public class PlaceJpaEntity {
     @Column(name = "walking_difficulty")
     private String walkingDifficulty;
     private Boolean active;
+    @Column(name = "admin_status")
+    private String adminStatus = "NORMAL"; // PROMOTE, NORMAL, REDUCE, PAUSE
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "place_tags", joinColumns = @JoinColumn(name = "place_id"))
@@ -72,5 +74,7 @@ public class PlaceJpaEntity {
     public Boolean getPublicTransport() { return publicTransport; }
     public String getWalkingDifficulty() { return walkingDifficulty; }
     public Boolean getActive() { return active; }
+    public String getAdminStatus() { return adminStatus; }
+    public void setAdminStatus(String adminStatus) { this.adminStatus = adminStatus; }
     public Set<String> getTags() { return tags; }
 }

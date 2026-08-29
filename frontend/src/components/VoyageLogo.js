@@ -1,3 +1,5 @@
+// Import only the compiled primitives used by this logo. This avoids Metro
+// traversing react-native-svg's unrelated filter exports on Windows.
 import Svg, { Circle, Defs, LinearGradient, Path, Stop } from 'react-native-svg';
 
 export default function VoyageLogo({ size = 190 }) {

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, Image, Pressable, StyleSheet, Text as NativeText, View } from 'react-native';
-import MapView, { Circle, Marker } from 'react-native-maps';
+import MapView, { Circle, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { getRecommendations } from '../api/recommendationApi';
 import { usePreferences } from '../state/PreferenceContext';
 import { places as demoPlaces } from '../data/mockPlaces';
@@ -39,30 +39,36 @@ export default function ExploreMapScreen({ route, navigation }) {
 
   const frameAll = useCallback(() => {
     const coordinates = [
-      { latitude: origin.lat, longitude: origin.lng },
-      ...places.map((place) => ({ latitude: place.location.lat, longitude: place.location.lng }))
-    ];
+      { latitude: origin?.lat || 0, longitude: origin?.lng || 0 },
+      ...places.map((place) => ({ latitude: place?.location?.lat || 0, longitude: place?.location?.lng || 0 }))
+    ].filter(c => c.latitude !== 0 && c.longitude !== 0);
     mapRef.current?.fitToCoordinates(coordinates, { edgePadding: { top: 130, left: 44, right: 44, bottom: 300 }, animated: true });
-  }, [origin.lat, origin.lng, places]);
+  }, [origin?.lat, origin?.lng, places]);
 
   const selectPlace = useCallback((place) => {
     setSelected(place);
-    mapRef.current?.animateCamera({ center: { latitude: place.location.lat, longitude: place.location.lng }, zoom: 12.4 }, { duration: 520 });
+    if (!place) return;
+    mapRef.current?.animateCamera({ center: { latitude: place?.location?.lat || 0, longitude: place?.location?.lng || 0 }, zoom: 12.4 }, { duration: 520 });
   }, []);
 
   const sheetStyle = useMemo(() => ({ opacity: sheet, transform: [{ translateY: sheet.interpolate({ inputRange: [0, 1], outputRange: [185, 0] }) }] }), [sheet]);
   const crowdColor = crowdColors[selected?.estimatedCrowd?.level] || colors.blueGlow;
 
   return <View style={styles.screen}>
-    <MapView ref={mapRef} style={styles.map} customMapStyle={mapStyle} onMapReady={frameAll}>
+    <MapView provider={PROVIDER_GOOGLE} ref={mapRef} style={styles.map} customMapStyle={mapStyle} onMapReady={frameAll}>
       {places.map((place) => <CrowdField key={`field-${place.placeId}`} place={place} active={selected?.placeId === place.placeId} />)}
-      <Marker coordinate={{ latitude: origin.lat, longitude: origin.lng }} title="Demo starting point"><View style={styles.userMarker}><View style={styles.userMarkerCore} /></View></Marker>
-      {places.map((place, index) => <Marker key={place.placeId} coordinate={{ latitude: place.location.lat, longitude: place.location.lng }} onPress={() => selectPlace(place)} title={place.name} description={place.category}>
-        <View style={[styles.photoPin, selected?.placeId === place.placeId && styles.photoPinSelected]}>
-          {place.photo && <Image source={{ uri: place.photo.url }} style={styles.pinImage} />}
-          <View style={[styles.pinIndex, selected?.placeId === place.placeId && styles.pinIndexSelected]}><Text style={styles.pinIndexText}>0{index + 1}</Text></View>
-        </View>
-      </Marker>)}
+      {origin ? (
+        <Marker coordinate={{ latitude: origin?.lat || 0, longitude: origin?.lng || 0 }} title="Demo starting point"><View style={styles.userMarker}><View style={styles.userMarkerCore} /></View></Marker>
+      ) : null}
+      {places.map((place, index) => (
+        <PlaceMarker
+          key={place.placeId}
+          place={place}
+          index={index}
+          selected={selected?.placeId === place.placeId}
+          onPress={() => selectPlace(place)}
+        />
+      ))}
     </MapView>
 
     <View pointerEvents="none" style={styles.header}><View><Text style={styles.brand}>VOYAGE</Text><Text style={styles.headerLabel}>DISCOVER NEARBY</Text></View><View style={styles.live}><View style={styles.liveDot} /><Text style={styles.liveText}>MAP LIVE</Text></View></View>
@@ -79,11 +85,44 @@ export default function ExploreMapScreen({ route, navigation }) {
 }
 
 function CrowdField({ place, active }) {
+  if (!place) return null;
   const heat = crowdHeat[place.estimatedCrowd?.level] || crowdHeat.MEDIUM;
-  const center = { latitude: place.location.lat, longitude: place.location.lng };
+  const center = { latitude: place?.location?.lat || 0, longitude: place?.location?.lng || 0 };
   const scale = active ? 1 : .48;
   return <><Circle center={center} radius={760 * scale} fillColor={heat[0]} strokeColor="transparent" /><Circle center={center} radius={420 * scale} fillColor={heat[1]} strokeColor="transparent" /><Circle center={center} radius={190 * scale} fillColor={heat[2]} strokeColor="transparent" /></>;
 }
+
+const PlaceMarker = ({ place, index, selected, onPress }) => {
+  const [tracksViewChanges, setTracksViewChanges] = useState(true);
+
+  // Re-enable tracking if selection state changes so the pin size animates properly on Android
+  useEffect(() => {
+    setTracksViewChanges(true);
+  }, [selected]);
+
+  return (
+    <Marker 
+      coordinate={{ latitude: place?.location?.lat || 0, longitude: place?.location?.lng || 0 }} 
+      onPress={onPress} 
+      title={place.name} 
+      description={place.category}
+      tracksViewChanges={tracksViewChanges}
+    >
+      <View style={[styles.photoPin, selected && styles.photoPinSelected]}>
+        {place.photo && (
+          <Image 
+            source={{ uri: place.photo.url }} 
+            style={styles.pinImage} 
+            onLoad={() => setTracksViewChanges(false)}
+          />
+        )}
+        <View style={[styles.pinIndex, selected && styles.pinIndexSelected]}>
+          <Text style={styles.pinIndexText}>0{index + 1}</Text>
+        </View>
+      </View>
+    </Marker>
+  );
+};
 
 const mapStyle = [{ elementType: 'geometry', stylers: [{ color: '#e8f4fc' }] }, { elementType: 'labels.text.fill', stylers: [{ color: '#4a6681' }] }, { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#aee1fa' }] }, { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#ffffff' }] }, { featureType: 'poi', elementType: 'geometry', stylers: [{ color: '#d8eaf5' }] }, { featureType: 'transit', elementType: 'geometry', stylers: [{ color: '#d1e2ed' }] }];
 

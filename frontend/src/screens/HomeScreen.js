@@ -1,14 +1,17 @@
 import { useEffect, useRef } from 'react';
-import { Animated, Easing, Pressable, SafeAreaView, StyleSheet, Text as NativeText, View } from 'react-native';
+import { Animated, Easing, Pressable, StyleSheet, Text as NativeText, View, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import VoyageLogo from '../components/VoyageLogo';
 import { colors, fonts } from '../config/theme';
+import { useAuth } from '../state/AuthContext';
 
 const Text = ({ style, ...props }) => <NativeText {...props} style={[{ fontFamily: fonts.book }, style]} />;
 
 export default function HomeScreen({ navigation }) {
   const logoMotion = useRef(new Animated.Value(0)).current;
   const contentMotion = useRef(new Animated.Value(0)).current;
+  const { logout } = useAuth();
 
   useEffect(() => {
     Animated.parallel([
@@ -29,24 +32,33 @@ export default function HomeScreen({ navigation }) {
   return <SafeAreaView style={styles.safe}>
     <StatusBar style="dark" />
     <View style={styles.lightOne} /><View style={styles.lightTwo} /><View style={styles.lightThree} />
-    <View style={styles.nav}><View style={styles.navLogo}><VoyageLogo size={33} /></View><View style={styles.status}><View style={styles.statusDot} /><Text style={styles.statusText}>VIJAYAWADA</Text></View></View>
-    <View style={styles.hero}><View style={styles.logoHalo} /><Animated.View style={logoStyle}><VoyageLogo size={206} /></Animated.View><Text style={styles.heroCaption}>LOCAL STORIES, LIGHTLY CURATED</Text></View>
+    <View style={styles.nav}>
+      <View style={styles.navLogo}><VoyageLogo size={33} /></View>
+      <View style={styles.navRight}>
+        <View style={styles.status}><View style={styles.statusDot} /><Text style={styles.statusText}>AI PROTOTYPE</Text></View>
+        <TouchableOpacity style={styles.logoutBtn} onPress={logout}>
+          <Text style={styles.logoutBtnText}>Logout</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+    <View style={styles.hero}><View style={styles.logoHalo} /><Animated.View style={logoStyle}><VoyageLogo size={206} /></Animated.View><Text style={styles.heroCaption}>AI EXPERIENCE IMPROVISER</Text></View>
     <Animated.View style={[styles.content, contentStyle]}>
-      <Text style={styles.title}>Go gently.{`\n`}See more.</Text>
-      <Text style={styles.copy}>Voyage brings four close-by places into focus, so a good day can begin without a plan.</Text>
-      <View style={styles.glassNote}><View style={styles.noteIcon}><Text style={styles.noteIconText}>04</Text></View><View><Text style={styles.noteLabel}>CLOSE TO YOU</Text><Text style={styles.noteText}>A small edit of nearby places</Text></View></View>
+      <Text style={styles.title}>Discover places{`\n`}differently.</Text>
+      <Text style={styles.copy}>Personalized journeys built around hidden destinations, local stories and meaningful experiences.</Text>
+      <View style={styles.glassNote}><View style={styles.noteIcon}><Text style={styles.noteIconText}>✨</Text></View><View><Text style={styles.noteLabel}>PERSONALIZED FLOW</Text><Text style={styles.noteText}>Interests → Hidden Places → Local Stories</Text></View></View>
+
       <Pressable style={({ pressed }) => [styles.primary, pressed && styles.primaryPressed]} onPress={() => navigation.navigate('Discovery')}>
         <Text style={styles.primaryText}>Start exploring</Text><View style={styles.arrowGlass}><Text style={styles.arrow}>→</Text></View>
       </Pressable>
     </Animated.View>
-    <View style={styles.footer}><View style={styles.footerLine} /><Text style={styles.footerText}>VOYAGE / CITY GUIDE</Text></View>
+    <View style={styles.footer}><View style={styles.footerLine} /><Text style={styles.footerText}>VOYAGE / EXPERIENCE IMPROVISER</Text></View>
   </SafeAreaView>;
 }
 
 const styles = StyleSheet.create({
   safe: { flex: 1, overflow: 'hidden', backgroundColor: '#EFF9FF' },
   lightOne: { position: 'absolute', width: 470, height: 410, borderRadius: 230, backgroundColor: 'rgba(128,214,255,.3)', top: -180, right: -168 }, lightTwo: { position: 'absolute', width: 340, height: 340, borderRadius: 180, backgroundColor: 'rgba(255,255,255,.92)', top: 125, left: -190 }, lightThree: { position: 'absolute', width: 285, height: 285, borderRadius: 150, backgroundColor: 'rgba(159,227,255,.26)', bottom: -115, right: -105 },
-  nav: { marginTop: 8, paddingHorizontal: 23, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }, navLogo: { width: 35, height: 35, borderRadius: 18, backgroundColor: 'rgba(255,255,255,.56)', borderWidth: 1, borderColor: 'rgba(255,255,255,.9)', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }, status: { backgroundColor: 'rgba(255,255,255,.56)', borderWidth: 1, borderColor: 'rgba(255,255,255,.86)', borderRadius: 99, flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 11, paddingVertical: 8 }, statusDot: { height: 6, width: 6, borderRadius: 4, backgroundColor: '#65C8EF' }, statusText: { color: '#4D7790', fontSize: 9, fontWeight: '600', letterSpacing: 1.2 },
+  nav: { marginTop: 8, paddingHorizontal: 23, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }, navLogo: { width: 35, height: 35, borderRadius: 18, backgroundColor: 'rgba(255,255,255,.56)', borderWidth: 1, borderColor: 'rgba(255,255,255,.9)', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }, navRight: { flexDirection: 'row', alignItems: 'center', gap: 10 }, status: { backgroundColor: 'rgba(255,255,255,.56)', borderWidth: 1, borderColor: 'rgba(255,255,255,.86)', borderRadius: 99, flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 11, paddingVertical: 8 }, statusDot: { height: 6, width: 6, borderRadius: 4, backgroundColor: '#65C8EF' }, statusText: { color: '#4D7790', fontSize: 9, fontWeight: '600', letterSpacing: 1.2 }, logoutBtn: { backgroundColor: 'rgba(255,255,255,.6)', paddingHorizontal: 12, paddingVertical: 8, borderRadius: 12, borderWidth: 1, borderColor: 'rgba(255,255,255,.9)' }, logoutBtnText: { color: '#234A65', fontSize: 10, fontWeight: 'bold' },
   hero: { height: '45%', minHeight: 315, alignItems: 'center', justifyContent: 'center' }, logoHalo: { position: 'absolute', width: 225, height: 225, borderRadius: 114, backgroundColor: 'rgba(255,255,255,.54)', borderWidth: 1, borderColor: 'rgba(255,255,255,.88)', shadowColor: '#63C8F2', shadowOpacity: .27, shadowRadius: 27, shadowOffset: { width: 0, height: 11 }, elevation: 5 }, heroCaption: { position: 'absolute', bottom: 22, color: '#6B91A7', fontSize: 9, fontWeight: '600', letterSpacing: 1.35 },
   content: { paddingHorizontal: 23 }, title: { color: '#234A65', fontSize: 38, lineHeight: 42, letterSpacing: -1.5, fontWeight: '600' }, copy: { maxWidth: 330, marginTop: 12, color: '#708FA2', fontSize: 15, fontWeight: '400', lineHeight: 22 },
   glassNote: { marginTop: 21, backgroundColor: 'rgba(255,255,255,.48)', borderWidth: 1, borderColor: 'rgba(255,255,255,.86)', borderRadius: 18, minHeight: 62, paddingHorizontal: 12, flexDirection: 'row', alignItems: 'center', gap: 10, shadowColor: '#91CDE9', shadowOpacity: .1, shadowRadius: 14, shadowOffset: { width: 0, height: 7 }, elevation: 2 }, noteIcon: { height: 38, width: 38, borderRadius: 13, backgroundColor: 'rgba(151,223,255,.36)', borderWidth: 1, borderColor: 'rgba(255,255,255,.9)', alignItems: 'center', justifyContent: 'center' }, noteIconText: { color: '#327EA4', fontSize: 12, fontWeight: '600' }, noteLabel: { color: '#77A2B9', fontSize: 8, fontWeight: '600', letterSpacing: 1.05 }, noteText: { color: '#42667B', fontSize: 13, fontWeight: '500', marginTop: 3 },

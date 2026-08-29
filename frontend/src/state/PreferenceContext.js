@@ -7,7 +7,11 @@ const defaults = {
   category: 'all',
   maxDistanceKm: 15,
   crowdPreference: 'LOW',
-  accessibilityNeeds: []
+  accessibilityNeeds: [],
+  budget: '15K',
+  travelStyle: 'off-beat',
+  groupType: 'solo',
+  hiddenPreference: 'hidden'
 };
 
 export function PreferenceProvider({ children }) {

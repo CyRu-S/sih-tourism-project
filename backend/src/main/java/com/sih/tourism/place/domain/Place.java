@@ -22,6 +22,7 @@ public class Place {
     private final boolean parkingAvailable;
     private final boolean publicTransport;
     private final String walkingDifficulty;
+    private final String adminStatus;
     private final Set<String> tags;
 
     private Place(Builder builder) {
@@ -43,6 +44,7 @@ public class Place {
         this.parkingAvailable = builder.parkingAvailable;
         this.publicTransport = builder.publicTransport;
         this.walkingDifficulty = builder.walkingDifficulty;
+        this.adminStatus = builder.adminStatus != null ? builder.adminStatus : "NORMAL";
         this.tags = Set.copyOf(builder.tags);
     }
 
@@ -64,6 +66,7 @@ public class Place {
     public boolean isParkingAvailable() { return parkingAvailable; }
     public boolean isPublicTransport() { return publicTransport; }
     public String getWalkingDifficulty() { return walkingDifficulty; }
+    public String getAdminStatus() { return adminStatus; }
     public Set<String> getTags() { return tags; }
 
     public static Builder builder() { return new Builder(); }
@@ -87,6 +90,7 @@ public class Place {
         private boolean parkingAvailable;
         private boolean publicTransport;
         private String walkingDifficulty;
+        private String adminStatus;
         private Set<String> tags = new LinkedHashSet<>();
 
         public Builder id(Long value) { id = value; return this; }
@@ -107,6 +111,7 @@ public class Place {
         public Builder parkingAvailable(boolean value) { parkingAvailable = value; return this; }
         public Builder publicTransport(boolean value) { publicTransport = value; return this; }
         public Builder walkingDifficulty(String value) { walkingDifficulty = value; return this; }
+        public Builder adminStatus(String value) { adminStatus = value; return this; }
         public Builder tags(Set<String> value) { tags = value == null ? new LinkedHashSet<>() : new LinkedHashSet<>(value); return this; }
         public Place build() { return new Place(this); }
     }

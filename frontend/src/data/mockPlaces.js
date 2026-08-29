@@ -1,5 +1,4 @@
-// Vijayawada is the fallback when device location is unavailable during demos.
-export const demoLocation = { lat: 16.5062, lng: 80.6480 };
+export const demoLocation = { lat: 22.5726, lng: 88.3639 };
 
 export const places = [
   {
@@ -13,7 +12,7 @@ export const places = [
     scoreBreakdown: { preference: 0.95, distance: 0.72, hiddenness: 0.92, crowdFit: 1, accessibility: 0.78, curation: 0.93 },
     why: 'A quiet river edge with heritage workshops and excellent early-morning photography.',
     description: 'Follow the narrow lanes behind the idol-makers to a peaceful stretch of river steps where Kolkata wakes slowly.',
-    photo: { url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Kumartuli%20Ghat%2001.jpg?width=1200', credit: 'Indrajit Das · Wikimedia Commons', source: 'Kumartuli Ghat 01.jpg · CC BY-SA 4.0' },
+    photo: { url: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=1200&q=80', credit: 'Unsplash', source: 'Direct Link' },
     visitorNote: { quote: 'Arrive before the city gets loud. The river, workshops and first chai make the detour feel completely worth it.', author: 'Mira S.', context: 'Sample traveller note · early-morning visit' },
     tags: ['riverside', 'craft', 'sunrise'],
     bestVisitTime: '6:00–8:00 AM',
@@ -31,7 +30,7 @@ export const places = [
     scoreBreakdown: { preference: 0.88, distance: 0.51, hiddenness: 0.9, crowdFit: 1, accessibility: 0.82, curation: 0.89 },
     why: 'A landscaped heritage escape that stays calm on weekday afternoons.',
     description: 'An 18th-century estate surrounded by garden paths, verandas and atmospheric details.',
-    photo: { url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Bawali%20Rajbari.jpg?width=1200', credit: 'Deepanjan Ghosh · Wikimedia Commons', source: 'Bawali Rajbari.jpg · CC BY-SA 4.0' },
+    photo: { url: 'https://images.unsplash.com/photo-1598324789736-4861f89564a0?w=1200&q=80', credit: 'Unsplash', source: 'Direct Link' },
     visitorNote: { quote: 'The courtyard is the reason to linger. Go slowly, look up at the verandas, and leave time for the garden paths.', author: 'Arjun P.', context: 'Sample traveller note · weekday afternoon' },
     tags: ['architecture', 'garden', 'history'],
     bestVisitTime: '3:00–5:00 PM',
@@ -49,7 +48,7 @@ export const places = [
     scoreBreakdown: { preference: 0.74, distance: 0.68, hiddenness: 0.65, crowdFit: 0.71, accessibility: 0.92, curation: 0.88 },
     why: 'A leafy lakeside loop with birdlife, open water and an easy pace.',
     description: 'Take the east-side paths for quieter lake views and a gentle walking route.',
-    photo: { url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Rabindra%20Sarobar-Dhakuria%2CRabindra%20Sarobar%2CKolkata-West%20Bengal%20700029-DSC%200035%2001.jpg?width=1200', credit: 'Souvik pal · Wikimedia Commons', source: 'Rabindra Sarobar · CC BY-SA 4.0' },
+    photo: { url: 'https://images.unsplash.com/photo-1582293041079-7814c2718105?w=1200&q=80', credit: 'Unsplash', source: 'Direct Link' },
     visitorNote: { quote: 'The eastern edge is calmer than expected. It is an easy place to walk without a plan and still come away refreshed.', author: 'Nandita R.', context: 'Sample traveller note · lakeside loop' },
     tags: ['lake', 'birds', 'walking'],
     bestVisitTime: '6:30–8:30 AM',
@@ -67,7 +66,7 @@ export const places = [
     scoreBreakdown: { preference: 0.78, distance: 0.94, hiddenness: 0.79, crowdFit: 0.58, accessibility: 0.53, curation: 0.81 },
     why: 'A compact local-food detour close to you, full of old-school ingredients and stories.',
     description: 'A sensory lane of tea, spices and small vendors best explored with time to wander.',
-    photo: { url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Burrabazar%20Market%20in%20Kolkata%2012.jpg?width=1200', credit: 'Kritzolina · Wikimedia Commons', source: 'Burrabazar Market in Kolkata · CC BY-SA 4.0' },
+    photo: { url: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f0a?w=1200&q=80', credit: 'Unsplash', source: 'Direct Link' },
     visitorNote: { quote: 'Come curious and hungry. Every turn has a new scent, and the tiny food stalls make the whole lane feel alive.', author: 'Rhea D.', context: 'Sample traveller note · market wander' },
     tags: ['street-food', 'market', 'local-life'],
     bestVisitTime: '10:00 AM–Noon',
@@ -85,7 +84,7 @@ export const places = [
     scoreBreakdown: { preference: 0.73, distance: 0.57, hiddenness: 0.87, crowdFit: 1, accessibility: 0.45, curation: 0.77 },
     why: 'A low-key water-side activity with a quieter feel than the city’s main promenades.',
     description: 'A scenic canal-side pocket for a short adventure and an unexpected view of the city.',
-    photo: { url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Adi%20Ganga%20or%20Tolly%27s%20Nullah%2C%20Kalighat%20in%201865%20%2805%29.jpg?width=1200', credit: 'Bourne and Shepherd · Wikimedia Commons', source: 'Historic Tolly’s Nullah image · public-domain archive' },
+    photo: { url: 'https://images.unsplash.com/photo-1623062637299-9069d5fb70a5?w=1200&q=80', credit: 'Unsplash', source: 'Direct Link' },
     visitorNote: { quote: 'It feels like an overlooked edge of the city. Keep expectations simple and it makes for a memorable little escape.', author: 'Soham K.', context: 'Sample traveller note · waterside stop' },
     tags: ['water', 'outdoors', 'active'],
     bestVisitTime: '7:00–9:00 AM',

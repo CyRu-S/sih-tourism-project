@@ -7,7 +7,7 @@ import { colors, fonts } from '../config/theme';
 const Text = ({ style, ...props }) => <NativeText {...props} style={[{ fontFamily: fonts.book }, style]} />;
 
 const stages = [
-  ['Setting your starting point', 'Using our Vijayawada demo location for nearby routes'],
+  ['Setting your starting point', 'Using our Kolkata demo location for nearby routes'],
   ['Mapping the city pulse', 'Layering live crowd signals and local rhythm'],
   ['Curating your next stop', 'Matching stories, pace, and places nearby']
 ];
