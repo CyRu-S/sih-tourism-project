@@ -40,6 +40,10 @@ export const Circle = () => {
   return null;
 };
 
+export const Polyline = () => {
+  return null;
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
