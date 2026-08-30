@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "Voyage",
+    "slug": "voyage",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "android": {
+      "package": "com.sih.hiddentrails"
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Voyage uses your photos only when you choose one to share with the local community."
+        }
+      ],
+      "expo-font"
+    ]
+  }
+}

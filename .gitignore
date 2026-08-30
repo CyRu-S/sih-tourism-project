@@ -1,0 +1,11 @@
+node_modules/
+.expo/
+.expo-export/
+dist/
+android/
+ios/
+.env
+.env.*
+!.env.example
+!backend/.env.example
+target/
