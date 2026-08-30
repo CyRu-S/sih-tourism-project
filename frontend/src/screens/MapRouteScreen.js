@@ -122,7 +122,7 @@ export default function MapRouteScreen({ route, navigation }) {
       <View style={styles.mapHeader}>
         <View style={styles.headerInfo}>
           <Text style={styles.headerTitle}>Crowd & Experience Map</Text>
-          <Text style={styles.headerSubtitle}>See visitor concentrations and find quieter trails.</Text>
+          <Text style={styles.headerSubtitle}>Find quieter moments and discover lesser-known experiences.</Text>
         </View>
         <Pressable onPress={() => navigation.goBack()} style={styles.backBtn}>
           <Text style={styles.backBtnText}>Close</Text>
@@ -171,26 +171,41 @@ export default function MapRouteScreen({ route, navigation }) {
         {showAlternativePanel && (
           <View style={styles.alternativePanel}>
             <Text style={styles.alternativeLabel}>QUIETER HERITAGE ALTERNATIVE</Text>
+            
             <View style={styles.comparisonRow}>
               <View style={styles.comparisonCol}>
+                <Text style={styles.compCategoryText}>Popular Destination</Text>
                 <Text style={styles.comparisonName}>Spice Lane</Text>
-                <Text style={{ color: '#DC3545', fontSize: 10, fontWeight: 'bold' }}>🔴 HIGH CROWD</Text>
+                <Text style={{ color: '#DC3545', fontSize: 10, fontWeight: 'bold', marginTop: 2 }}>🔴 HIGH</Text>
               </View>
+              
               <Text style={styles.swapArrow}>➔</Text>
+              
               <View style={styles.comparisonCol}>
+                <Text style={styles.compCategoryText}>Lesser-Known Alternative</Text>
                 <Text style={styles.comparisonName}>{alternativePlace.placeName}</Text>
-                <Text style={{ color: '#198754', fontSize: 10, fontWeight: 'bold' }}>💎 🟢 LOW CROWD</Text>
+                <Text style={{ color: '#198754', fontSize: 10, fontWeight: 'bold', marginTop: 2 }}>💎 🟢 LOW</Text>
               </View>
             </View>
+
             <Text style={styles.comparisonNotice}>Matches similar history and photography tags with fewer crowds.</Text>
+            
             <Pressable 
               onPress={() => handlePlaceSelect(alternativePlace)} 
               style={styles.alternativeSelectBtn}
             >
-              <Text style={styles.alternativeSelectText}>Open Quieter Alternative</Text>
+              <Text style={styles.alternativeSelectText}>Explore Alternative</Text>
             </Pressable>
           </View>
         )}
+
+        {/* Tourism Balance Message */}
+        <View style={styles.balanceCard}>
+          <Text style={styles.balanceHeading}>Discover beyond the hotspots</Text>
+          <Text style={styles.balanceText}>
+            Exploring lesser-known places can help distribute visitor activity while giving tourists new experiences.
+          </Text>
+        </View>
 
         {/* Route Travel Modes */}
         <View style={styles.modeRow}>
@@ -221,7 +236,7 @@ export default function MapRouteScreen({ route, navigation }) {
             style={[styles.ctaBtn, { backgroundColor: colors.forest }]} 
             onPress={() => navigation.navigate('ItineraryImproviser', { place: selectedPlace, origin })}
           >
-            <Text style={[styles.ctaBtnText, { color: colors.white }]}>Improve My Experience</Text>
+            <Text style={[styles.ctaBtnText, { color: colors.white }]}>Build My Experience</Text>
           </Pressable>
         </View>
       </Animated.View>
@@ -275,11 +290,16 @@ const styles = StyleSheet.create({
   alternativeLabel: { fontSize: 8, fontWeight: '900', color: colors.forest, letterSpacing: 0.8, marginBottom: 6 },
   comparisonRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 },
   comparisonCol: { flex: 1 },
+  compCategoryText: { fontSize: 8, fontWeight: 'bold', color: colors.muted, textTransform: 'uppercase', marginBottom: 2 },
   comparisonName: { fontSize: 13, fontWeight: 'bold', color: colors.ink },
   swapArrow: { fontSize: 16, color: colors.muted, marginHorizontal: 8 },
   comparisonNotice: { fontSize: 10, color: colors.muted, lineHeight: 14, marginBottom: 8 },
   alternativeSelectBtn: { backgroundColor: colors.forest, paddingVertical: 8, borderRadius: 8, alignItems: 'center' },
   alternativeSelectText: { color: colors.white, fontSize: 10, fontWeight: 'bold' },
+
+  balanceCard: { backgroundColor: colors.moss, borderRadius: 12, padding: 10, marginBottom: 12, borderWidth: 1, borderColor: 'rgba(255,255,255,.9)' },
+  balanceHeading: { fontSize: 10, fontWeight: 'bold', color: colors.forestDark, marginBottom: 3 },
+  balanceText: { fontSize: 10, color: colors.ink, lineHeight: 14 },
 
   modeRow: { flexDirection: 'row', gap: 6, marginBottom: 12 },
   modeBtn: { flex: 1, borderWidth: 1, borderColor: colors.line, borderRadius: 10, paddingVertical: 8, paddingHorizontal: 6, alignItems: 'center' },
