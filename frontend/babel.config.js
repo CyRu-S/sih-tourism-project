@@ -7,6 +7,7 @@ module.exports = function(api) {
         'module-resolver',
         {
           alias: {
+            'react-native-maps': './src/mocks/react-native-maps.js',
             'react-native-svg/lib/commonjs/elements/Svg': './src/mocks/svg.js',
             'react-native-svg/lib/commonjs/elements/Circle': './src/mocks/circle.js',
             'react-native-svg/lib/commonjs/elements/Defs': './src/mocks/defs.js',
